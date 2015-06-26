@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+rm /usr/local/bin/webtree
+rm -rf /usr/local/lib/webtree
+

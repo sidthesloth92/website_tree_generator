@@ -1,0 +1,130 @@
+#!/usr/bin/env sh
+
+style="css"
+reset=0
+mobile=0
+
+RESET_FILE_LOCATION=/usr/local/lib/webtree/reset.css
+INDEX_FILE_LOCATION=/usr/local/lib/webtree/index.html
+
+create_directory() {
+        if [ ! $1 ]
+        then    
+                echo "specify the directory name"
+                exit 0  
+        fi
+        
+        if mkdir $1
+        then
+                echo "directory " $1 " created successfully"
+        else
+                echo "directory " $1 "  already exists. do you want to overwrite?"
+                select choice in "Yes" "No"
+                do
+                        case $choice in
+                                Yes )   rm -rf $1
+					echo "directory " $1 " deleted successfully"
+                                        mkdir $1
+					echo "directory " $1 " re-created successfully"
+                                        break;;
+                                 No )   exit 0;;
+                         esac
+                done
+        fi
+}
+
+while getopts :srm flag
+do
+	case $flag in
+		s)style="sass";;
+		r)reset=1;;
+		m)mobile=1;;
+		*)echo "Invalid arguments"
+		  exit 0;;
+	esac
+done
+
+echo $style
+echo $reset
+echo $mobile
+
+shift $(($OPTIND -1))
+
+create_directory $1 
+
+cd $1
+mkdir css
+mkdir img
+mkdir js
+
+cp $INDEX_FILE_LOCATION index.html
+
+if [ $mobile == 0 ] 
+then	
+	echo "creating a desktop site"
+	if [ $style = "css" ]
+	then
+		echo "creating css site"
+		cd css
+        	
+		touch style.css
+		if [ $reset == 1 ]
+		then
+			echo "adding reset"
+			cp $RESET_FILE_LOCATION reset.css
+        		echo "@import url('reset.css');" > style.css
+		fi
+	else
+		echo "creating sass site"
+		mkdir scss
+		cd scss
+
+		touch style.scss       		
+		if [ $reset == 1 ]
+		then
+			echo "adding reset"
+			cp $RESET_FILE_LOCATION  _reset.scss
+       			echo "@import 'reset';" > style.scss
+		fi
+
+		cd ..
+		cd css
+		touch style.css
+	fi
+else
+	echo "creating a mobile site"
+	cd css
+	touch style.css
+
+	if [ $style = "css" ]
+	then
+  		echo "creating css site"
+		
+		touch style.css
+		if [ $reset == 1 ]
+		then
+			echo "adding reset"
+			cp $RESET_FILE_LOCATION reset.css
+  	       		echo "@import url('reset.css');" > style.css
+		fi
+	else
+		echo "creating sass site"
+        		
+		touch style.scss
+
+		if [ $reset == 1 ]
+		then
+			echo "adding reset"
+			cp $RESET_FILE_LOCATION  _reset.scss
+       			echo "@import 'reset';" > style.scss
+		fi
+	fi	
+fi
+
+cd ..
+cd js
+touch script.js
+
+#cp ../index.html index.html
+
+#sed -i '.bak' 's/import/new/g' style.css

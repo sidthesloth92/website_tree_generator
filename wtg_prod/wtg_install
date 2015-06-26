@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+if cp -r webtree /usr/local/lib
+then
+	echo "Template Copy Success"
+else
+	echo "Directory already exists. Do you want to overwrite?"
+	select choice in "Yes" "No"
+	do
+		case $choice in
+			Yes ) rm -f webtree
+			      echo "Existing files deleted"
+			      cp -r webtree /usr/local/lib
+			      echo " Template Copy Success"
+			      break;;
+			No ) exit 0;;
+		esac
+	done	
+fi
+
+ln -s /usr/local/lib/webtree/webtree /usr/local/bin/webtree
+
+
+echo SUCCESSFULLY INSTALLED...
+
