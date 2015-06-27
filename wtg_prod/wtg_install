@@ -2,16 +2,16 @@
 
 if cp -r webtree /usr/local/lib
 then
-	echo "Template Copy Success"
+	echo "Operation Complete..."
 else
 	echo "Directory already exists. Do you want to overwrite?"
 	select choice in "Yes" "No"
 	do
 		case $choice in
 			Yes ) rm -f webtree
-			      echo "Existing files deleted"
+			      echo "deteting existing files..."
 			      cp -r webtree /usr/local/lib
-			      echo " Template Copy Success"
+			      echo "Operation Complete..."
 			      break;;
 			No ) exit 0;;
 		esac
@@ -21,5 +21,4 @@ fi
 ln -s /usr/local/lib/webtree/webtree /usr/local/bin/webtree
 
 
-echo SUCCESSFULLY INSTALLED...
-
+echo SUCCESSFULLY INSTALLED
