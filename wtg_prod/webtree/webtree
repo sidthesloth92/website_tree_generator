@@ -3,9 +3,11 @@
 style="css"
 reset=0
 mobile=0
+help=0
 
 RESET_FILE_LOCATION=/usr/local/lib/webtree/reset.css
 INDEX_FILE_LOCATION=/usr/local/lib/webtree/index.html
+HELP_FILE_LOCATION=/usr/local/lib/webtree/help.txt
 
 create_directory() {
         if [ ! $1 ]
@@ -33,16 +35,24 @@ create_directory() {
         fi
 }
 
-while getopts :srm flag
+while getopts :help:srm flag
 do
 	case $flag in
+		h)help=1;;
 		s)style="sass";;
 		r)reset=1;;
 		m)mobile=1;;
-		*)echo "Invalid arguments..."
+		*)	echo $flag
+			echo "Invalid arguments..."
 		  exit 0;;
 	esac
 done
+
+if [ $help == 1 ] 
+then
+	cat $HELP_FILE_LOCATION
+	exit 0
+fi
 
 shift $(($OPTIND -1))
 
