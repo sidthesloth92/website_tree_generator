@@ -1,0 +1,11 @@
+Usage:
+	webtree [-s | -r | -m] website_name
+
+
+| Flag | Description |
+
+ -s  -  indicates whether the site is a sass site or css site. By default, it is css.   
+ -r  -  indicates whether reset css/sass files are to be included. If not passed, reset files are not included			 
+ -m  -  indicates whether the site is mobile or desktop site. If not passed, then desktop site is the default. For desktop site, css files are kept under css folder and sass files are kept under sass folder. Whereas for mobile site, both sass and css files are kept under css folder. 
+ -h  -  opens the help screen
+
