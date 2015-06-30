@@ -7,6 +7,7 @@ This includes:
 * creating an index.html file with html boilerplate
 * including a css reset or a sass reset partial based on the flags passed
 
+**Note:** Right now works only for Mac and Linux
 
 ### Installation
 
